@@ -1,32 +1,32 @@
 #include"game.h"
 
-void Initialize(int* answer , int* input , int * current_turn) {
+void initialize(int* answer , int* input , int * current_turn) {
     int i = 0 , j = 0 , num[NAIL_NUM] = {0};
     srand((unsigned int)time(NULL));
     
     for (i = 0; i < NAIL_NUM;) {
-        num[i] = rand() % NAIL_MAX + NAIL_MIN;//È¡Ò»¸ö´ýÐ´ÈëµÄËæ»úÖµ
+        num[i] = rand() % NAIL_MAX + NAIL_MIN;//å–ä¸€ä¸ªå¾…å†™å…¥çš„éšæœºå€¼
 
-        for (j = 0; j < i; j++)//¼ìÑéÊÇ·ñÓÐÖØ¸´
+        for (j = 0; j < i; j++)//æ£€éªŒæ˜¯å¦æœ‰é‡å¤
             if (num[i] == num[j])
-                break;          //´¥·¢¾Í²»»áÐ´Èë
+                break;          //è§¦å‘å°±ä¸ä¼šå†™å…¥
         
-        if (!(j < i)) {     //ifÃ»ÓÐ´¥·¢break
+        if (!(j < i)) {     //ifæ²¡æœ‰è§¦å‘break
             *(answer + i) = num[i];
             i++;
         }
     }
 }
-void Input(int* answer , int* input , int * current_turn) {
+void input(int* answer , int* input , int * current_turn) {
     printf("turn%d send answer: ", *current_turn);
-    scanf("%d %d %d %d" , input , input+1 , input+2 , input+3);//´ýÐÞ¸Ä
+    scanf("%d %d %d %d" , input , input+1 , input+2 , input+3);//å¾…ä¿®æ”¹
 }
-int Check(int* answer , int* input , int * current_turn) {
+int check(int* answer , int* input , int * current_turn) {
     int real_true = 0, half_true = 0 , i =0 ,j=0;
     for (i = 0; i < NAIL_NUM; i++) {        //j->input  i->answer
-        for (j = 0; j < NAIL_NUM; j++) {    //ÊäÈëÊÇ·ñÔÚ´ð°¸ÖÐ
+        for (j = 0; j < NAIL_NUM; j++) {    //è¾“å…¥æ˜¯å¦åœ¨ç­”æ¡ˆä¸­
             if (*(input + j) == *(answer + i))
-                break;                      //ÔÚ´ð°¸ÖÐ
+                break;                      //åœ¨ç­”æ¡ˆä¸­
         }
 
         if (j < NAIL_NUM) {              
@@ -41,23 +41,23 @@ int Check(int* answer , int* input , int * current_turn) {
     printf("\nreal_true : %d , half_true : %d\n\n",real_true,half_true);
 
     if (real_true == NAIL_NUM)
-        return 1;//²Â³ö´ð°¸
+        return 1;//çŒœå‡ºç­”æ¡ˆ
     else if (*current_turn == MAX_TURN)
-        return 2;//³¬Ê±
+        return 2;//è¶…æ—¶
     else 
-        return 0;//¼ÌÐøÓÎÏ·
+        return 0;//ç»§ç»­æ¸¸æˆ
 
 }
-void Next_turn(int* answer , int* input , int * current_turn) {
+void next_turn(int* answer , int* input , int * current_turn) {
     (*current_turn)++;
 }
-void Test(int* answer , int* input , int * current_turn) {
+void test(int* answer , int* input , int * current_turn) {
     int end = 0;
-    Initialize(answer, input, current_turn);
+    initialize(answer, input, current_turn);
 	while (!end){
-		Input(answer, input, current_turn);
-		end = Check(answer, input, current_turn);
-		Next_turn(answer, input, current_turn);
+		input(answer, input, current_turn);
+		end = check(answer, input, current_turn);
+		next_turn(answer, input, current_turn);
 	}
     switch (end)
     {
